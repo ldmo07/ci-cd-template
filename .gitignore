@@ -1,3 +1,4 @@
 jenkins_home/
 *.log
 .superpowers/
+ci-cd-node/
