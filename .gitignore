@@ -2,3 +2,4 @@ jenkins_home/
 *.log
 .superpowers/
 ci-cd-node/
+ci-cd-dotnet/
