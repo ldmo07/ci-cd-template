@@ -26,6 +26,7 @@ Abrir http://localhost:8080 (Jenkins ocupa el puerto 8080 del host).
 | node-example | 8081 | 3000 |
 | python-example | 8082 | 5000 |
 | dotnet-example | 8083 | 8080 |
+| react-example | 8084 | 80 |
 
 Los puertos de host no se validan: si dos apps usan el mismo, la segunda falla en `docker run`.
 
