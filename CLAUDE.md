@@ -32,8 +32,7 @@ Shell is Git Bash on Windows; prefix `docker exec` with `MSYS_NO_PATHCONV=1` if 
 
 ## Gotchas
 
-- `ci-cd-node/`, `ci-cd-dotnet/`, `ci-cd-python/`, `ci-cd-react/` in the root are separate git clones/repos (with their own `origin` under `github.com/ldmo07`), git-ignored here. Changes to them are pushed from inside each folder; pushing to `main` there triggers the Jenkins deploy within ~1–2 min. `ci-cd-dotnet`'s remote is `-ci-cd-dotnet` (leading hyphen).
-- `.gitattributes` forces LF; CRLF in a `Jenkinsfile`/`sh` block breaks the pipeline.
+- `ci-cd-node/`, `ci-cd-dotnet/`, `ci-cd-python/`, `ci-cd-react/` in the root are separate git clones/repos (with their own `origin` under `github.com/ldmo07`), git-ignored here. Changes to them are pushed from inside each folder; pushing to `main` there triggers the Jenkins deploy within ~1–2 min.- `.gitattributes` forces LF; CRLF in a `Jenkinsfile`/`sh` block breaks the pipeline.
 - The React app (`:8084`) calls the .NET API (`:8083/personas`) from the browser, so the API has CORS enabled.
 - Only Jenkins does CI/CD; do not add GitHub Actions.
 - Out of scope by design: webhooks/tunnel, reverse proxy, private repos, registry, multi-node.
