@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t ${APP_NAME}:${BUILD_NUMBER} -t ${APP_NAME}:latest .'
+                sh 'docker build --label app=${APP_NAME} -t${APP_NAME}:${BUILD_NUMBER} -t ${APP_NAME}:latest .'
             }
         }
 
@@ -51,6 +51,12 @@ pipeline {
                     exit 1
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker image prune -f --filter label=app=${APP_NAME} || true'
         }
     }
 }
