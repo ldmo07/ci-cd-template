@@ -56,7 +56,10 @@ pipeline {
 
     post {
         always {
-            sh 'docker image prune -f --filter label=app=${APP_NAME} || true'
+            sh '''
+                docker images ${APP_NAME} --format '{{.Tag}}' | grep -E '^[0-9]+$' | tail -n +4 | xargs -r -I{} docker rmi ${APP_NAME}:{} || true
+                docker image prune -f --filter label=app=${APP_NAME} || true
+            '''
         }
     }
 }
