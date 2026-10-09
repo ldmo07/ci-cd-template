@@ -55,11 +55,31 @@ pipeline {
     }
 
     post {
+        success {
+            script { notifyDiscord(":white_check_mark: ${APP_NAME} #${BUILD_NUMBER} desplegado en el puerto ${HOST_PORT}") }
+        }
+        failure {
+            script { notifyDiscord(":x: ${APP_NAME} #${BUILD_NUMBER} fallo el pipeline (el contenedor anterior se conserva si el build fallo)") }
+        }
         always {
             sh '''
                 docker images ${APP_NAME} --format '{{.Tag}}' | grep -E '^[0-9]+$' | sort -rn | tail -n +4 | xargs -r -I{} docker rmi ${APP_NAME}:{} || true
                 docker image prune -f --filter label=app=${APP_NAME} || true
             '''
         }
+    }
+}
+
+// Notifica a Discord. Requiere la credencial Jenkins "discord-webhook" (Secret text);
+// si no existe o falla el envio, solo avisa en el log y no rompe el pipeline.
+def notifyDiscord(String message) {
+    try {
+        withCredentials([string(credentialsId: 'discord-webhook', variable: 'DISCORD_WEBHOOK_URL')]) {
+            withEnv(["MSG=${message}"]) {
+                sh '''curl -fsS -H "Content-Type: application/json" -d "{\\"content\\":\\"${MSG}\\"}" "$DISCORD_WEBHOOK_URL" > /dev/null'''
+            }
+        }
+    } catch (err) {
+        echo "No se pudo notificar a Discord: ${err.message}"
     }
 }
