@@ -18,6 +18,8 @@ Requiere el permiso **Gestionar webhooks** en el canal.
 3. Ponle un nombre (por ejemplo `ci-cd-webhook`) y confirma que el canal es el correcto.
 4. Pulsa **Copiar URL del webhook**. Tiene la forma `https://discord.com/api/webhooks/<id>/<token>`.
 
+![Webhook en los ajustes del canal de Discord](discord-webhook.png)
+
 > **La URL es un secreto.** Cualquiera que la tenga puede publicar en el canal. No la pegues en chats, issues ni en el repositorio (los repos son públicos). Si se filtra, usa **Eliminar webhook** en Discord y crea uno nuevo.
 
 ## 2. Guardar la URL como credencial en Jenkins
@@ -35,6 +37,8 @@ Requiere el permiso **Gestionar webhooks** en el canal.
    | Description | libre, por ejemplo `Webhook de Discord` |
 
 4. Pulsa **Create**.
+
+![Credencial discord-webhook en Jenkins](jenkins-discord-credential.png)
 
 El **ID** no sale de Discord: es el nombre con el que el `Jenkinsfile` busca la credencial (`credentialsId: 'discord-webhook'`). Si lo escribes distinto, no hay error en el deploy, pero tampoco llegan los avisos.
 

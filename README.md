@@ -89,6 +89,8 @@ Si las rutas se deforman en Git Bash, antepón `MSYS_NO_PATHCONV=1` a los `docke
 4. Ejecuta **Build Now** una vez: así Jenkins registra el `pollSCM`. Desde ahí cada push a `main` despliega solo (retraso máximo de ~1 minuto).
 5. En GitHub, en el repo de la app: *Settings → Branches → Add branch protection rule* sobre `main`, con **Require a pull request before merging** y **Require status checks to pass before merging** (check `test`). El check solo aparece en el buscador después de que el workflow haya corrido una vez, así que abre antes un PR de prueba.
 
+   ![Regla de branch protection sobre main](docs/github-branch-protection.png)
+
 #### Verificar una app sin Jenkins
 Desde su carpeta (`templates/examples/<stack>` o `ci-cd-<stack>`):
 
@@ -133,9 +135,21 @@ Cómo crear el webhook y la credencial: [docs/discord-notifications.md](docs/dis
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+Configuración inicial, en el orden en que se hace:
 
-> **Pendiente:** agregar capturas de Jenkins y del mensaje en Discord.
+**1. Branch protection en GitHub** (por cada repo de app, sobre `main`)
+
+![Branch protection en GitHub](docs/github-branch-protection.png)
+
+**2. Webhook en Discord** (ajustes del canal → Integraciones → Webhooks)
+
+![Webhook en Discord](docs/discord-webhook.png)
+
+**3. Credencial `discord-webhook` en Jenkins** (Manage Jenkins → Credentials)
+
+![Credencial en Jenkins](docs/jenkins-discord-credential.png)
+
+> **Pendiente:** agregar una captura del mensaje que llega al canal de Discord y de un job en Jenkins.
 
 
 ## Tech Stack
